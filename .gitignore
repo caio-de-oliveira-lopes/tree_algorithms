@@ -1,0 +1,11 @@
+*.bin
+*.v2
+*.vsidx
+*.suo
+*.dll
+*.exe
+net6.0
+*.cache
+obj
+ProjectSettings.json
+.vs

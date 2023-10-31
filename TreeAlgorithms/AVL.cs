@@ -2,12 +2,7 @@
 {
     public class AVL : Tree
     {
-        public static int GetHeight(Node? N)
-        {
-            if (N == null)
-                return 0;
-            return N.Height;
-        }
+        public AVL() { }
 
         private static Node? RightRotate(Node? y)
         {
@@ -48,25 +43,31 @@
             return y;
         }
 
-        public static int GetBalance(Node? N)
+        private static int GetBalance(Node? N)
         {
             return N is null ? 0 : GetHeight(N.Left) - GetHeight(N.Right);
         }
 
-        public Node? Insert(int key, Node? node = null)
+        private static int GetHeight(Node? N)
+        {
+            if (N == null)
+                return 0;
+            return N.Height;
+        }
+
+        protected override Node? InsertNode(int key, Node? node = null)
         {
             if (node is null)
                 return new Node(key);
 
             if (key < node.Key)
-                node.Left = Insert(key, node.Left);
+                node.Left = InsertNode(key, node.Left);
             else if (key > node.Key)
-                node.Right = Insert(key, node.Right);
+                node.Right = InsertNode(key, node.Right);
             else
                 return node;
 
-            node.Height = 1 + Math.Max(GetHeight(node.Left),
-                                GetHeight(node.Right));
+            node.Height = 1 + Math.Max(GetHeight(node.Left), GetHeight(node.Right));
 
             int balance = GetBalance(node);
 
@@ -95,18 +96,7 @@
             return node;
         }
 
-
-        public static Node GetMinValueNode(Node node)
-        {
-            Node current = node;
-
-            while (current.Left is not null)
-                current = current.Left;
-
-            return current;
-        }
-
-        public Node? DeleteNode(int key, Node? root = null)
+        protected override Node? DeleteNode(int key, Node? root = null)
         {
             if (root is null)
                 return root;
@@ -135,9 +125,14 @@
                 }
                 else
                 {
-                    Node temp = GetMinValueNode(root.Right);
-                    root.Key = temp.Key;
-                    root.Right = DeleteNode(temp.Key, root.Right);
+                    Node? temp = GetMinValueNode(root.Right);
+
+                    if (temp != null)
+                    {
+                        root.Key = temp.Key;
+
+                        root.Right = DeleteNode(temp.Key, root.Right);
+                    }
                 }
             }
 
