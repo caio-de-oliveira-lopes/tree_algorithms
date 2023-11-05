@@ -2,7 +2,10 @@
 {
     public class AVL : Tree
     {
-        public AVL() { }
+        public AVL() 
+        {
+            Type = TreeType.AVL;
+        }
 
         private static Node? RightRotate(Node? y)
         {
@@ -57,6 +60,7 @@
 
         protected override Node? InsertNode(int key, Node? node = null)
         {
+            IncrementKeyComparison();
             if (node is null)
                 return new Node(key);
 
@@ -73,15 +77,22 @@
 
             // Left Left Case 
             if (balance > 1 && key < node.Left?.Key)
+            {
+                IncrementNumRotations();
                 return RightRotate(node);
+            }
 
             // Right Right Case 
             if (balance < -1 && key > node.Right?.Key)
+            {
+                IncrementNumRotations();
                 return LeftRotate(node);
+            }
 
             // Left Right Case 
             if (balance > 1 && key > node.Left?.Key)
             {
+                IncrementNumRotations(2);
                 node.Left = LeftRotate(node.Left);
                 return RightRotate(node);
             }
@@ -89,6 +100,7 @@
             // Right Left Case 
             if (balance < -1 && key < node.Right?.Key)
             {
+                IncrementNumRotations(2);
                 node.Right = RightRotate(node.Right);
                 return LeftRotate(node);
             }

@@ -8,19 +8,23 @@ namespace TreeAlgorithms
 {
     public class BST : Tree
     {
-        public BST() { }
+        public BST()
+        {
+            Type = TreeType.BST;
+        }
 
         protected override Node? InsertNode(int key, Node? node = null)
         {
+            IncrementKeyComparison();
             if (node is null)
                 return new Node(key);
 
             if (key < node.Key)
-                return node.Left = InsertNode(key, node.Left);
+                node.Left = InsertNode(key, node.Left);
             else if (key > node.Key)
-                return node.Right = InsertNode(key, node.Right);
-            else
-                return node;
+                node.Right = InsertNode(key, node.Right);
+
+            return node;
         }
 
         protected override Node? DeleteNode(int key, Node? root = null)
@@ -29,9 +33,9 @@ namespace TreeAlgorithms
                 return root;
 
             if (key < root.Key)
-                return root.Left = DeleteNode(key, root.Left);
+                root.Left = DeleteNode(key, root.Left);
             else if (key > root.Key)
-                return root.Right = DeleteNode(key, root.Right);
+                root.Right = DeleteNode(key, root.Right);
             else
             {
                 if ((root.Left == null) || (root.Right == null))
@@ -58,7 +62,7 @@ namespace TreeAlgorithms
                     {
                         root.Key = temp.Key;
 
-                        return root.Right = DeleteNode(temp.Key, root.Right);
+                        root.Right = DeleteNode(temp.Key, root.Right);
                     }
                 }
             }

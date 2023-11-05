@@ -9,3 +9,5 @@ net6.0
 obj
 ProjectSettings.json
 .vs
+*.user
+launchSettings.json
