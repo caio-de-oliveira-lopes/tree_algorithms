@@ -295,7 +295,7 @@ namespace TreeAlgorithms
                 }
             }
             first.Delete();
-            oWB.SaveAs(Path.Combine(@outputPath, "PCC534 - Análise De Ordenações.xlsx"));
+            oWB.SaveAs(Path.Combine(@outputPath, "PCC534 - Árvores.xlsx"));
             oXL.Visible = true;
             oXL.UserControl = true;
         }
